@@ -14,111 +14,196 @@
     <div id="app"></div>
 
     <script type='text/babel'>
-      const cardData = importedFlashCardDataFile;
+      "use strict";
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
+function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return !!right[Symbol.hasInstance](left); } else { return left instanceof right; } }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!_instanceof(instance, Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var cardData = importedFlashCardDataFile;
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App() {
+    var _this;
+
+    _classCallCheck(this, App);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this));
+
+    _defineProperty(_assertThisInitialized(_this), "shuffleBackward", function () {
+      _this.setState({
+        cardData: cardData
+      });
+
+      var newCardData = [cardData[6]].concat(_toConsumableArray(cardData.slice(0, 6)));
+
+      _this.setState({
+        cardData: newCardData
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "shuffleForward", function () {
+      var cardData = _this.state.cardData;
+      var newCardData = [].concat(_toConsumableArray(cardData.slice(1)), [cardData[0]]);
+
+      _this.setState({
+        cardData: newCardData
+      });
+    });
+
+    _this.state = {
       cardData: []
     };
+    return _this;
   }
 
-  componentDidMount() {
-    this.setState({ cardData: cardData });
-  }
+  _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setState({
+        cardData: cardData
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
 
-  shuffleBackward = () => {
-    this.setState({ cardData: cardData });
-    const newCardData = [cardData[6], ...cardData.slice(0, 6)];
-    this.setState({ cardData: newCardData });
-  }
+      return React.createElement("div", {
+        className: "App"
+      }, React.createElement("h1", {
+        className: "title"
+      }, "Flashback"), React.createElement("p", {
+        className: "sub-title"
+      }, "An interactive flashcard app."), React.createElement("div", {
+        className: "card-list"
+      }, this.state.cardData.map(function (card, index) {
+        return React.createElement(Card, {
+          key: index,
+          index: index,
+          front: card.front,
+          back: card.back
+        });
+      })), React.createElement("div", {
+        className: "buttons"
+      }, React.createElement("button", {
+        onClick: function onClick() {
+          return _this2.shuffleBackward();
+        }
+      }, "<"), React.createElement("button", {
+        onClick: function onClick() {
+          return _this2.shuffleForward();
+        }
+      }, ">")));
+    }
+  }]);
 
-  shuffleForward = () => {
-    const { cardData } = this.state;
-    const newCardData = [...cardData.slice(1), cardData[0]];
-    this.setState({ cardData: newCardData });
-  }
+  return App;
+}(React.Component);
 
-  render() {
-    return (
-      <div className='App'>
-        <h1 className='title'>
-          Flashback
-        </h1>
-        <p className='sub-title'>
-          An interactive flashcard app.
-        </p>
-        <div className='card-list'>
-          {this.state.cardData.map((card, index) => <Card key={index} index={index} front={card.front} back={card.back} />)}
-        </div>
-        <div className='buttons'>
-          <button onClick={() => this.shuffleBackward()}>
-            &lt;
-          </button>
-          <button onClick={() => this.shuffleForward()}>
-            &gt;
-          </button>
-        </div>
-      </div>
-    );
-  }
-}
+var Card =
+/*#__PURE__*/
+function (_React$Component2) {
+  _inherits(Card, _React$Component2);
 
-class Card extends React.Component {
-  constructor() {
-    super();
-    this.state = {
+  function Card() {
+    var _this3;
+
+    _classCallCheck(this, Card);
+
+    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(Card).call(this));
+
+    _defineProperty(_assertThisInitialized(_this3), "flipCard", function () {
+      if (_this3.props.index === 0) {
+        _this3.setState({
+          flipped: !_this3.state.flipped
+        });
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this3), "cardClass", function () {
+      return _this3.state.flipped ? 'Card -back' : 'Card -front';
+    });
+
+    _this3.state = {
       flipped: false
     };
+    return _this3;
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.flipped === true) {
-      this.setState({ flipped: false });
+  _createClass(Card, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevState.flipped === true) {
+        this.setState({
+          flipped: false
+        });
+      }
     }
-  }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
 
-  flipCard = () => {
-    if(this.props.index === 0) {
-      this.setState({ flipped: !this.state.flipped });
-    }
-  }
-
-  cardClass = () => this.state.flipped ? 'Card -back' : 'Card -front';
-
-
-  render() {
-    return (
-      <div className={this.cardClass()} onClick={() => this.flipCard()}>
-        {!this.state.flipped ?
-          <div className='front'>
-            <h3 className='question'>
-              {this.props.front.question}
-            </h3>
-            <p className='hint'>
-              <span>Hint:</span> {this.props.front.hint}
-            </p>
-          </div>
-          :
-          <div className='back'>
-            <div className='image'>
-              <img src={this.props.back.image} />
-            </div>
-            <h3 className='answer'>
-              {this.props.back.answer}
-            </h3>
-            <p className='description'>
-              {this.props.back.description}
-            </p>
-          </div>
+      return React.createElement("div", {
+        className: this.cardClass(),
+        onClick: function onClick() {
+          return _this4.flipCard();
         }
-      </div>
-    );
-  }
-}
+      }, !this.state.flipped ? React.createElement("div", {
+        className: "front"
+      }, React.createElement("h3", {
+        className: "question"
+      }, this.props.front.question), React.createElement("p", {
+        className: "hint"
+      }, React.createElement("span", null, "Hint:"), " ", this.props.front.hint)) : React.createElement("div", {
+        className: "back"
+      }, React.createElement("div", {
+        className: "image"
+      }, React.createElement("img", {
+        src: this.props.back.image
+      })), React.createElement("h3", {
+        className: "answer"
+      }, this.props.back.answer), React.createElement("p", {
+        className: "description"
+      }, this.props.back.description)));
+    }
+  }]);
 
-ReactDOM.render(<App />, document.getElementById('app'));
+  return Card;
+}(React.Component);
+
+ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
     </script>
   </body>
 </html>
